@@ -1,34 +1,38 @@
-package com.example.twoactivities;
+package com.example.twoactivitycodingchallenge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
-    public static final String EXTRA_REPLY = "com.example.twoactivities.extra.REPLY";
-    private EditText mReply;
-
+    private TextView article;
+    private TextView heading;
+    private String paragraph;
+    private String headline;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        mReply = findViewById(R.id.editText_second);
+        article = findViewById(R.id.paragraph);
+        heading = findViewById(R.id.heading);
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        TextView textview = findViewById(R.id.text_message);
-        textview.setText(message);
+        int button_value = intent.getIntExtra(MainActivity.EXTRA_MESSAGE,0);
+        if(button_value==1) {
+            paragraph = getResources().getString(R.string.paragraph1);
+            headline = getResources().getString(R.string.heading1);
+        }
+        else if(button_value==2){
+            paragraph = getResources().getString(R.string.paragraph2);
+            headline = getResources().getString(R.string.heading2);
+        }
+        else if(button_value==3){
+            paragraph = getResources().getString(R.string.paragraph3);
+            headline = getResources().getString(R.string.heading3);
+        }
+        article.setText(paragraph);
+        heading.setText(headline);
 
-    }
-
-    public void returnReply(View view) {
-        String reply = mReply.getText().toString();
-        Intent replyIntent = new Intent();
-        replyIntent.putExtra(EXTRA_REPLY,reply);
-        setResult(RESULT_OK, replyIntent);
-        finish();
     }
 }
